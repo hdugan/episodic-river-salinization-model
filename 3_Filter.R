@@ -53,19 +53,21 @@ p3_targets <- list(
                                      p3_nwis_site_with_zero_nhd_area,
                                      p3_attr_missing_sites)),
   tar_target(p3_ts_sc_qualified, 
-             filter_data_to_qualifying_sites(p3_ts_sc_winter_qualified, 
+             filter_data_to_qualifying_sites(site_data = p3_ts_sc_winter_qualified, 
                                              keep_sites = p3_ts_sc_temporal_qualified_sites,
                                              remove_sites = p3_sites_unqualified) %>% 
                # Adding one more step to force this to have the same sites as the p3_static_attributes
                # For some reason, there were sites squeaking through.
-               filter(site_no %in% unique(p3_static_attributes$site_no))),
+               filter(site_no %in% unique(p3_static_attributes$site_no)) |> 
+               # Remove zero values 
+               filter(SpecCond > 0)),
   
-  # Do the same for Flow data.
-  tar_target(p3_attr_q_qualified, 
-             read_feather(p2_attr_q_dv_feather) %>% 
+  # # Do the same for Flow data.
+  tar_target(p3_attr_q_qualified,
+             read_feather(p2_attr_q_dv_feather) %>%
                filter_data_to_qualifying_sites(keep_sites = p3_ts_sc_temporal_qualified_sites,
                                                remove_sites = p3_sites_unqualified)),
-  
+
   # The `_qualified` data above go back to `2_Prepare` to continue prepping
   
   ##### ATTR FILTERING #####

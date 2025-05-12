@@ -148,6 +148,6 @@ filter_data_to_qualifying_sites <- function(site_data, keep_sites, remove_sites)
           sum(keep_sites %in% remove_sites))
 
   site_data %>% 
-    filter(site_no %in% keep_sites) %>% 
-    filter(!site_no %in% remove_sites)
+    dplyr::filter(site_no %in% keep_sites) %>% 
+    dplyr::filter(!site_no %in% remove_sites)
 }
