@@ -73,6 +73,29 @@ p7_targets <- list(
     return(out_file)
   }, format='file'),
   
+  ###### Figure 2: select SpC time series ######
+  
+  tar_target(p7_SI_misclassfied_plot, {
+    example_episodic_sites <- c('01642198', '03298300') 
+    example_not_episodic_sites <- c('01104415', '01104455', '01655794', '03277130',
+                                    '04200500', '04219768', '05545750') 
+    ts_sc = p3_ts_sc_qualified %>%
+      filter(site_no %in% c(example_episodic_sites, example_not_episodic_sites))
+
+    create_episodic_plotlist(ts_sc, sites_episodic = example_episodic_sites,
+                             episodic_col = p7_color_not_episodic,
+                             not_episodic_col = p7_color_episodic,
+                             usenrow=3, addNWISName = TRUE)
+  }),
+  tar_target(p7_SI_misclassfied_plot_png, {
+    out_file <- '7_Disseminate/out/SI_misclassified_ts.png'
+    png(out_file, width = 6.5, height = 6.5, units='in', res=500)
+    print(p7_SI_misclassfied_plot)
+    dev.off()
+    return(out_file)
+  }, format='file'),
+  
+  
   ###### Figure 3: random forest results ######
   
   # Isolate overall importance and out-of-bag errors
@@ -112,9 +135,13 @@ p7_targets <- list(
   tar_target(p7_attr_episodic_boxplotsALL_png, 
              create_attribute_boxplots('7_Disseminate/out/attributes_boxes_episodicALL.png',
                                        p5_site_attr_rf,
-                                       calculate_attr_importance(p5_rf_model_hypertuned) %>% 
-                                         filter(site_category == 'Episodic') %>% 
-                                         arrange(desc(importance)) %>% pull(attribute),
+                                       p5_rf_model_hypertuned$importance %>% 
+                                         as_tibble(rownames = 'attribute') %>% 
+                                         dplyr::select(attribute, importance = MeanDecreaseGini) %>% 
+                                         arrange(desc(importance)) |> pull(attribute), 
+                                       # calculate_attr_importance(p5_rf_model_hypertuned) %>% 
+                                       #   filter(site_category == 'Episodic') %>% 
+                                       #   arrange(desc(importance)) %>% pull(attribute),
                                        p7_attr_name_xwalk, 
                                        c(Episodic=p7_color_episodic, 
                                          `Not episodic` = p7_color_not_episodic)), 
@@ -173,7 +200,7 @@ p7_targets <- list(
     p7_comid_xwalk = p6_state_comids %>% 
       select(-tar_group) %>% 
       distinct() %>% 
-      rename(nhd_comid = COMID) %>% 
+      dplyr::rename(nhd_comid = COMID) %>% 
       filter(region_fname %in% p6_states) %>% 
       inner_join(p6_predicted_comid_streamorder, by = 'nhd_comid') %>% 
       select(region, region_fname, nhd_comid) 
@@ -497,7 +524,8 @@ p7_targets <- list(
       theme_bw(base_size = 7) +
       ggspatial::annotation_map_tile(type = 'cartolight', zoom = 11) +
       geom_sf(aes(color = pred_fct), linewidth = 0.3) +
-      scale_x_continuous(n.breaks = 4) +
+      scale_x_continuous(breaks = c(-81.75, -81.5, -81.25)) + 
+      # scale_x_continuous(n.breaks = 4) +
       scale_color_manual(values = c(Episodic = p7_color_episodic,
                                     `Not episodic` = p7_color_not_episodic,
                                     `Not classified` = 'grey50'),
@@ -531,7 +559,8 @@ p7_targets <- list(
       theme_bw(base_size = 7) +
       ggspatial::annotation_map_tile(type = 'cartolight', zoom = 11) +
       geom_sf(aes(color = pred_fct), linewidth = 0.3) +
-      scale_x_continuous(n.breaks = 3) +
+      scale_x_continuous(breaks = c(-89.6, -89.4, -89.2)) +
+      # scale_x_continuous(n.breaks = 3) +
       scale_color_manual(values = c(Episodic = p7_color_episodic,
                                     `Not episodic` = p7_color_not_episodic,
                                     `Not classified` = 'grey50'),
@@ -565,7 +594,8 @@ p7_targets <- list(
       theme_bw(base_size = 7) +
       ggspatial::annotation_map_tile(type = 'cartolight', zoom = 11) +
       geom_sf(aes(color = pred_fct), linewidth = 0.3) +
-      scale_x_continuous(n.breaks = 2) +
+      scale_x_continuous(breaks = c(-73.6, -73.0)) +
+      # scale_x_continuous(n.breaks = 2) + #not working
       scale_color_manual(values = c(Episodic = p7_color_episodic,
                                     `Not episodic` = p7_color_not_episodic,
                                     `Not classified` = 'grey50'),

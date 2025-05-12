@@ -88,7 +88,7 @@ apply_randomforest <- function(site_attr_data, mtry = NULL, ntree = NULL, seed =
 #' 
 tune_randomForest_hyperparameters <- function(site_attr_data, 
                                               seed = c(19, 1019), 
-                                              mtry_options = 2:8, 
+                                              mtry_options = 4:8, 
                                               ntree_options = c(500,1000,5000,10000)) {
   map(seed, ~{
     
