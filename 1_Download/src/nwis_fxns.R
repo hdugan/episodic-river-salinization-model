@@ -28,7 +28,7 @@ inventory_nwis_sites_byState <- function(state_cd, param_cd, start_date, end_dat
     filter(site_tp_cd == 'ST') %>% 
     # Return only the site numbers
     pull(site_no) %>% 
-    unique()
+    base::unique()
 }
 
 #' @title Check how much data is available for sites
@@ -158,7 +158,7 @@ filter_to_min_data_standards <- function(data_info, min_yrs, min_end_date) {
 #' 
 add_download_grp <- function(data_info, max_sites = 2000) {
   data_info %>% 
-    split(.$query_service) %>% 
+    base::split(.$query_service) %>% 
     map(~{
       # Set `max_results` much lower than default for `uv` because 1 day = 1440 records
       max_results <- ifelse(unique(.x$query_service) == 'uv', 15000, 250000)
@@ -173,9 +173,9 @@ add_download_grp <- function(data_info, max_sites = 2000) {
         # (uv or dv)) will have task numbers that start with "1", so now we create 
         # a new column called `task_num` to create unique task numbers within
         # each group and by splitting those based on max desired download sizes
-        group_by(task_num_by_group, task_num_by_results) %>% 
-        mutate(task_num = cur_group_id()) %>% 
-        ungroup() %>% 
+        dplyr::group_by(task_num_by_group, task_num_by_results) %>% 
+        dplyr::mutate(task_num = cur_group_id()) %>% 
+        dplyr::ungroup() %>% 
         dplyr::select(site_no, query_service, task_num)
     }) %>% 
     bind_rows()

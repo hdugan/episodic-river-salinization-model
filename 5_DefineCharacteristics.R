@@ -6,6 +6,7 @@ source('5_DefineCharacteristics/src/apply_randomforest.R')
 source('5_DefineCharacteristics/src/evaluate_randomforest.R')
 source('5_DefineCharacteristics/src/visualize_attribute_distributions.R')
 source('5_DefineCharacteristics/src/visualize_results.R')
+source('5_DefineCharacteristics/src/misclassfied_randomforest.R')
 
 p5_targets <- list(
   
@@ -58,6 +59,9 @@ p5_targets <- list(
                                                                p5_site_attr_rf_optimal,
                                                                focus_class = "Episodic")),
   tar_target(p5_rf_attr_partdep_viz, visualize_partial_dependence(p5_rf_attr_partdep, p5_site_attr_rf_optimal)),
+  
+  ###### Misclassified sites ######
+  tar_target(p5_misclassified, misclassified_randomforest(p5_rf_model_optimized, p5_site_attr)),
   
   ###### Visualize site category attribute distributions ######
   

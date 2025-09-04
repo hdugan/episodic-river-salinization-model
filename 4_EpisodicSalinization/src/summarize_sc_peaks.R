@@ -32,6 +32,10 @@ summarize_salt_peaks <- function(ts_peak_data, winter_months = c(12,1,2,3),
     # This removes 488 site-years (out of 3,302 so ~15% dropped)
     filter(winterSum > 60) %>%
     
+    # Keep only last 10 years [new in revision]? 
+    group_by(site_no) |> 
+    filter(year >= max(year) - 10) |> 
+    
     # Now filter to only peaks themselves (which removes other data that may
     # be part of one of the peak events but isn't the peak itself)
     filter(peak_flag) %>% 
@@ -43,12 +47,12 @@ summarize_salt_peaks <- function(ts_peak_data, winter_months = c(12,1,2,3),
     # Find top peaks per site per year per season 
     group_by(site_no, year, season) %>% 
     arrange(desc(SpecCond)) %>% 
-    slice(1:num_peaks_per_year) %>%
+    dplyr::slice(1:num_peaks_per_year) %>%
     ungroup() %>% 
     
     # Now calculate median SpC per site per season using only those top peaks
     group_by(site_no, season) %>% 
-    summarize(meanSpC = mean(SpecCond, na.rm=TRUE), .groups='keep') %>% 
+    summarize(meanSpC = median(SpecCond, na.rm=TRUE), .groups='keep') %>% 
     ungroup() %>% 
     
     # Pivot so that each site has a row and each season has a column 

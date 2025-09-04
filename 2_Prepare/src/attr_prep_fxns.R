@@ -83,18 +83,18 @@ calculate_catchment_areas <- function(polys_sf, comid_upstream_tbl, comid_site_x
   
   catchment_area_tbl <- polys_sf %>% 
     st_drop_geometry() %>% 
-    select(nhd_comid_upstream = nhd_comid, area_sqkm = areasqkm)
+    dplyr::select(nhd_comid_upstream = nhd_comid, area_sqkm = areasqkm)
   
   comid_catchment_info <- comid_upstream_tbl %>% 
-    left_join(catchment_area_tbl, by = 'nhd_comid_upstream') %>% 
+    dplyr::left_join(catchment_area_tbl, by = 'nhd_comid_upstream') %>% 
     # Per NHD COMID, calculate the area of *just* that catchment and
     # the area of all upstream catchments. 
-    group_by(nhd_comid) %>% 
-    summarize(attr_areaSqKm = area_sqkm[nhd_comid_upstream == nhd_comid],
+    dplyr::group_by(nhd_comid) %>% 
+    dplyr::summarize(attr_areaSqKm = area_sqkm[nhd_comid_upstream == nhd_comid],
               attr_areaCumulativeSqKm = sum(area_sqkm, na.rm=TRUE),
               attr_areaRatio = attr_areaSqKm / attr_areaCumulativeSqKm,
               numNACatchments = sum(is.na(area_sqkm))) %>% 
-    ungroup() 
+    dplyr::ungroup() 
   
   if(!is.null(comid_site_xwalk)) {
     comid_catchment_info_ready <- comid_catchment_info %>% 

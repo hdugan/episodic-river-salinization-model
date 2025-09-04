@@ -21,7 +21,7 @@ p1_targets <- list(
   ###### NWIS DATA 0: Set download configs for streamflow (Q) & specific conductivity (SC) ######
   
   tar_target(p1_nwis_start_date, as.Date('1950-01-01')), 
-  tar_target(p1_nwis_end_date, as.Date('2024-03-31')), 
+  tar_target(p1_nwis_end_date, as.Date('2025-04-30')), 
   tar_target(p1_nwis_pcode_sc, '00095'), # NWIS specific conductance code
   tar_target(p1_nwis_pcode_q, '00060'), # NWIS streamflow code
   tar_target(p1_nwis_min_years, 3), # Minimum number of years required
@@ -258,6 +258,16 @@ p1_targets <- list(
   
   # Prepare COMIDs to download so that polygons are only downloaded and stored once
   tar_target(p1_nhdplus_comids, na.omit(unique(p1_nwis_site_nhd_comid_ALL_xwalk$nhd_comid))),
+  
+  # # Try to avoid throttle issue 
+  # tar_target(comidLength, length(p1_nhdplus_comids)),
+  # tar_target(comids_group1, p1_nhdplus_comids[1:(comidLength/2)]),
+  # tar_target(comids_group2, p1_nhdplus_comids[ceiling(comidLength/2):comidLength]),
+  # tar_target(p1_nhdplus_comids_upstream_1, identify_upstream_comids(comids_group1), map(comids_group1)), # Identify upstream COMIDs
+  # tar_target(p1_nhdplus_comids_upstream_2, identify_upstream_comids(comids_group2), map(comids_group2)), # Identify upstream COMIDs
+  # tar_target(p1_nhdplus_comids_upstream_ALL, bind_rows(p1_nhdplus_comids_upstream_1, p1_nhdplus_comids_upstream_2)), # Identify upstream COMIDs
+  # # 
+  
   tar_target(p1_nhdplus_comids_upstream_ALL, identify_upstream_comids(p1_nhdplus_comids), map(p1_nhdplus_comids)), # Identify upstream COMIDs
   tarchetypes::tar_group_count(p1_nhdplus_comids_grp, 
                                count = 1000, # Set 1000 groups to map over
@@ -307,7 +317,7 @@ p1_targets <- list(
   # Load the national catchments layer as an sf object and rename `FEATUREID` to `nhd_comid`
   tar_target(p1_nhdplus_catchments_sf, 
              st_read(p1_nhdplus_gdb, layer = 'CatchmentSP') %>% 
-               rename(nhd_comid = FEATUREID, areasqkm = AreaSqKM)),
+               rename(nhd_comid = FEATUREID, areasqkm = AreaSqKM))
   
   ##### Download National Water Model streamflow #####
   
@@ -317,10 +327,10 @@ p1_targets <- list(
   # And calculates the median per COMID before returning data
   # This took ~4 hrs to run 4 groups of ~100 COMIDs
   
-  tarchetypes::tar_group_size(p1_nwm_comids_grp,
-                               size = 100, # Set groups of 10 to map over NWM download
-                               tibble(nhd_comid = p1_nhdplus_comids)),
-  tar_target(p1_nwm_streamflow, download_NWMv2_streamflow(p1_nwm_comids_grp$nhd_comid),
-             pattern = map(p1_nwm_comids_grp))
+  # tarchetypes::tar_group_size(p1_nwm_comids_grp,
+  #                              size = 100, # Set groups of 10 to map over NWM download
+  #                              tibble(nhd_comid = p1_nhdplus_comids)),
+  # tar_target(p1_nwm_streamflow, download_NWMv2_streamflow(p1_nwm_comids_grp$nhd_comid),
+  #            pattern = map(p1_nwm_comids_grp))
   
 )

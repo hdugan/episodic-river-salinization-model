@@ -25,7 +25,7 @@ fetch_site_locations <- function(site_metadata) {
   # Transform sites into spatial features objects using the appropriate EPSG code
   # based on the datum. Tranform to the 4326 EPSG before binding together into a single sf
   sites_sf <- site_metadata %>% 
-    split(.$datum) %>% 
+    base::split(.$datum) %>% 
     map(~{
       epsg_in <- datum2epsg(unique(.x$datum))
       .x %>% 
