@@ -1,0 +1,179 @@
+DATASET STATS 
+Total Episodic sites/Total sites
+[1] 112
+[1] 436
+
+Unique site days:[1] 1402008
+
+Median number of days:[1] 2708.5
+
+Sites over 10 years (n, %)
+[1] 134
+[1] 0.3073394
+
+Episodic sites over 10 years: 32
+Number of sites by streamorder
+# A tibble: 10 × 2
+   attr_streamorder     n
+              <int> <int>
+ 1                1    75
+ 2                2    74
+ 3                3    87
+ 4                4    71
+ 5                5    61
+ 6                6    42
+ 7                7    14
+ 8                8     7
+ 9                9     4
+10               10     1
+
+Minimum and Maximum SpC
+# A tibble: 1 × 3
+  `min(medianSpc)` `max(medianSpc)` `median(medianSpc)`
+             <dbl>            <dbl>               <dbl>
+1               12             1870                 340
+
+Number of episodic sites by streamorder
+# A tibble: 6 × 2
+  attr_streamorder     n
+             <int> <int>
+1                1    27
+2                2    27
+3                3    25
+4                4    17
+5                5    13
+6                6     3
+
+
+MODEL STATS 
+Model Accuracy:[1] 0.9318182
+
+Model OOB[1] 0.08648884
+
+Model Confusion matrix             Episodic Not episodic class.error
+Episodic           79           16  0.16842105
+Not episodic       15          238  0.05928854
+Number of stream segments predicted:[1] 785914
+
+
+PREDICTION OUTPUT 
+For entire region 
+# A tibble: 3 × 4
+  regionLength pred_fct       predLength predLengthPer
+         <dbl> <ord>               <dbl>         <dbl>
+1     1351788. Episodic           84986.         6.29 
+2     1351788. Not episodic     1261647.        93.3  
+3     1351788. Not classified      5155.         0.381
+
+For individual states 
+# A tibble: 66 × 6
+   region        region_fname stateLength pred_fct      predLength predLengthPer
+   <chr>         <chr>              <dbl> <ord>              <dbl>         <dbl>
+ 1 New Jersey    NJ                13935. Episodic          3775.        27.1   
+ 2 Massachusetts MA                14606. Episodic          2838.        19.4   
+ 3 Connecticut   CT                10033. Episodic          1916.        19.1   
+ 4 Ohio          OH                92375. Episodic         17043.        18.4   
+ 5 Maryland      MD                20416. Episodic          3237.        15.9   
+ 6 Delaware      DE                 4186. Episodic           560.        13.4   
+ 7 Illinois      IL               112983. Episodic         10662.         9.44  
+ 8 Rhode Island  RI                 1972. Episodic           181.         9.18  
+ 9 New York      NY                87603. Episodic          6666.         7.61  
+10 Indiana       IN                47313. Episodic          3228.         6.82  
+11 Pennsylvania  PA                87554. Episodic          5539.         6.33  
+12 Michigan      MI                83541. Episodic          4546.         5.44  
+13 Virginia      VA                86514. Episodic          4435.         5.13  
+14 Iowa          IA               112693. Episodic          4829.         4.28  
+15 Missouri      MO               162375. Episodic          6883.         4.24  
+16 Kentucky      KY                78016. Episodic          2697.         3.46  
+17 Wisconsin     WI                92673. Episodic          2759.         2.98  
+18 New Hampshire NH                17053. Episodic           394.         2.31  
+19 Minnesota     MN               110606. Episodic          2075.         1.88  
+20 West Virginia WV                51357. Episodic           369.         0.719 
+21 Maine         ME                51555. Episodic           296.         0.573 
+22 Vermont       VT                12426. Episodic            58.4        0.470 
+23 Vermont       VT                12426. Not episodic     12351.        99.4   
+24 West Virginia WV                51357. Not episodic     50885.        99.1   
+25 Maine         ME                51555. Not episodic     50513.        98.0   
+26 Minnesota     MN               110606. Not episodic    108272.        97.9   
+27 New Hampshire NH                17053. Not episodic     16544.        97.0   
+28 Wisconsin     WI                92673. Not episodic     89793.        96.9   
+29 Kentucky      KY                78016. Not episodic     75298.        96.5   
+30 Missouri      MO               162375. Not episodic    155197.        95.6   
+31 Iowa          IA               112693. Not episodic    107436.        95.3   
+32 Virginia      VA                86514. Not episodic     81427.        94.1   
+33 Michigan      MI                83541. Not episodic     78574.        94.1   
+34 Pennsylvania  PA                87554. Not episodic     81964.        93.6   
+35 Indiana       IN                47313. Not episodic     44072.        93.2   
+36 New York      NY                87603. Not episodic     80336.        91.7   
+37 Illinois      IL               112983. Not episodic    102275.        90.5   
+38 Rhode Island  RI                 1972. Not episodic      1676.        85.0   
+39 Delaware      DE                 4186. Not episodic      3545.        84.7   
+40 Maryland      MD                20416. Not episodic     16770.        82.1   
+41 Ohio          OH                92375. Not episodic     75289.        81.5   
+42 Connecticut   CT                10033. Not episodic      8066.        80.4   
+43 Massachusetts MA                14606. Not episodic     11413.        78.1   
+44 New Jersey    NJ                13935. Not episodic      9951.        71.4   
+45 Rhode Island  RI                 1972. Not classifi…      115.         5.82  
+46 Massachusetts MA                14606. Not classifi…      356.         2.44  
+47 Maryland      MD                20416. Not classifi…      409.         2.00  
+48 Delaware      DE                 4186. Not classifi…       81.5        1.95  
+49 New Jersey    NJ                13935. Not classifi…      209.         1.50  
+50 Maine         ME                51555. Not classifi…      747.         1.45  
+51 Virginia      VA                86514. Not classifi…      651.         0.753 
+52 New York      NY                87603. Not classifi…      601.         0.686 
+53 New Hampshire NH                17053. Not classifi…      116.         0.678 
+54 Connecticut   CT                10033. Not classifi…       51.1        0.509 
+55 Michigan      MI                83541. Not classifi…      421.         0.504 
+56 Iowa          IA               112693. Not classifi…      428.         0.380 
+57 Minnesota     MN               110606. Not classifi…      259.         0.234 
+58 West Virginia WV                51357. Not classifi…      104.         0.202 
+59 Missouri      MO               162375. Not classifi…      295.         0.181 
+60 Vermont       VT                12426. Not classifi…       16.5        0.133 
+61 Wisconsin     WI                92673. Not classifi…      121.         0.131 
+62 Pennsylvania  PA                87554. Not classifi…       51.5        0.0588
+63 Ohio          OH                92375. Not classifi…       43.0        0.0466
+64 Illinois      IL               112983. Not classifi…       46.5        0.0411
+65 Kentucky      KY                78016. Not classifi…       21.2        0.0271
+66 Indiana       IN                47313. Not classifi…       12.3        0.0259
+
+By stream order 
+# A tibble: 30 × 6
+   StreamOrde orderLength pred_fct            n predLength predLengthPer
+        <dbl>       <dbl> <ord>           <int>      <dbl>         <dbl>
+ 1         -9      11755. Episodic         1145   2520.          21.4   
+ 2          1     794335. Episodic        29891  53644.           6.75  
+ 3          2     251689. Episodic        11651  15967.           6.34  
+ 4          3     142545. Episodic         5117   7452.           5.23  
+ 5          4      79857. Episodic         2607   3539.           4.43  
+ 6          5      41670. Episodic         1168   1435.           3.44  
+ 7          6      19214. Episodic          308    386.           2.01  
+ 8          7       5478. Episodic           43     40.1          0.731 
+ 9          8       3499. Episodic            5      2.40         0.0687
+10         -9      11755. Not episodic     3194   6819.          58.0   
+11          1     794335. Not episodic   371853 738706.          93.0   
+12          2     251689. Not episodic   157766 235369.          93.5   
+13          3     142545. Not episodic    86109 134921.          94.7   
+14          4      79857. Not episodic    50628  76226.          95.5   
+15          5      41670. Not episodic    29344  40174.          96.4   
+16          6      19214. Not episodic    13611  18763.          97.7   
+17          7       5478. Not episodic     3716   5431.          99.1   
+18          8       3499. Not episodic     2780   3492.          99.8   
+19          9       1191. Not episodic      664   1190.          99.9   
+20         10        556. Not episodic      221    556.         100     
+21         -9      11755. Not classified   2152   2416.          20.6   
+22          1     794335. Not classified   3306   1985.           0.250 
+23          2     251689. Not classified    708    352.           0.140 
+24          3     142545. Not classified    508    172.           0.120 
+25          4      79857. Not classified    660     92.5          0.116 
+26          5      41670. Not classified    730     60.8          0.146 
+27          6      19214. Not classified    418     64.7          0.337 
+28          7       5478. Not classified     90      7.30         0.133 
+29          8       3499. Not classified     43      3.88         0.111 
+30          9       1191. Not classified      8      0.972        0.0816
+
+Watershed Areas
+Cuyahoga[1] 2101.532
+Maummee[1] 16970.99
+Yahara[1] 1305.199
+Housatonic[1] 5021.823
+

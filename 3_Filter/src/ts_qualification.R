@@ -19,6 +19,7 @@ filter_winter <- function(in_file, param_colname) {
       
       # Start by creating a data frame with all possible days for each site
       ts_data_all_days <- .x %>% 
+        filter(SpecCond > 0) %>%
         group_by(site_no, dateTime) %>% 
         summarise(new = mean(get(param_colname), na.rm = T), .groups="keep") %>%
         rename(!!as.name(param_colname) := new) %>% 

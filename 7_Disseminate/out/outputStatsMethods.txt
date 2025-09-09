@@ -1,0 +1,24 @@
+States missing USGS gage sites[1] "ME" "NH" "VT"
+
+Site counts through filtering# A tibble: 4 × 2
+  step                          n
+  <chr>                     <int>
+1 Download                    512
+2 After temporal filter       445
+3 After tidal/highSC filter   441
+4 After filtering for NHD+    436
+
+Somtimes the tidal and high SpC sites overlap.
+[1] "Tidal sites: 01467200, 01490140"
+[1] "High SpC sites: 01376520, 01484272, 01490140"
+
+Somtimes the NHD+ missing attributes and zero area overlap.
+[1] "Missing COMID sites: 01359133"
+[1] "Missing attributes sites: 01359133, 01436000, 01478137, 01542500, 05288580"
+[1] "Missing catchment area sites: 01542500, 01436000, 05288580"
+
+Num. sites that were requeried with a larger search radius for COMID: 4
+Num. sites that share a COMID with at least one other site: 45
+Range of median flow values from National Water Model: Inf to -Inf
+
+Number of COMIDs used in the predict step: 785902
