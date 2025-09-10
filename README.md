@@ -1,5 +1,6 @@
 # episodic-river-salinization-model
 Modeling code in a targets pipeline for understanding characteristics of rivers that experience episodic salinization from winter road salting events.
+This repo was forked from the original repository: https://github.com/lindsayplatt/episodic-river-salinization-model
 
 This repository contains reproducible code for downloading, processing, and modeling data related to river salinization dynamics. Using [The Turing Ways's definitions](https://the-turing-way.netlify.app/reproducible-research/overview/overview-definitions), this code and analysis are intended to be *fully reproducible* and could be *somewhat replicable* with different states and/or dates. 
 
