@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1054371642.svg)](https://doi.org/10.5281/zenodo.17095175)
+
 # episodic-river-salinization-model
 Modeling code in a targets pipeline for understanding characteristics of rivers that experience episodic salinization from winter road salting events.
 This repo was forked from the original repository: https://github.com/lindsayplatt/episodic-river-salinization-model
